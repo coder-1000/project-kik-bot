@@ -1,0 +1,51 @@
+import requests
+import json
+
+from flask import Flask, request, Response
+from kik import KikApi, Configuration
+
+
+requests.post(
+    'https://api.kik.com/v1/config',
+    auth=('<superbot2017>', '<a3472d7d-06e7-4166-a77d-947cdff46255>'),
+    headers={
+        'Content-Type': 'application/json'
+    },
+    data=json.dumps({
+        'webhook': 'https://9a48262e.ngrok.io/incoming', 
+        'features': {
+            'receiveReadReceipts': False, 
+            'receiveIsTyping': False, 
+            'manuallySendReadReceipts': False, 
+            'receiveDeliveryReceipts': False
+        },
+        
+        'staticKeyboard': {
+            'type': 'suggested', 
+            'responses': [
+                {
+                    'body': 'Start', 
+                    'type': 'text'
+                }, 
+                {
+                    'body': 'Help', 
+                    'type': 'text'
+                }
+            ]
+        }
+    })
+)
+
+requests.get(
+    'https://api.kik.com/v1/config',
+    auth=('<superbot2017>', '<a3472d7d-06e7-4166-a77d-947cdff46255>')
+)
+
+messages = messages_from_json(request.json["messages"])
+response_messages = []
+
+respond.messages.append(TextMessage(
+    to = message.from_user,
+    chat_id = message.chat_id,
+    
+    
